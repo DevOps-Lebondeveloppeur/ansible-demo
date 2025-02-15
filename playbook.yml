@@ -1,0 +1,96 @@
+- name: Install Docker, Nginx, and Docker Compose on Ubuntu
+  hosts: vps
+  become: true
+  tasks:
+
+    # Update apt cache 
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    # Install required dependencies for Docker
+    - name: Install required dependencies for Docker
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    # Add Docker's official GPG key
+    - name: Add Docker's official GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    # Add Docker repository
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
+        state: present
+
+    # Install Docker
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: latest
+
+    # Start and enable Docker service
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    # Install Nginx
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: latest
+
+    # Start and enable Nginx service
+    - name: Start and enable Nginx service
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+
+    # Install Docker Compose Plugin (integrated with Docker)
+    - name: Install Docker Compose Plugin
+      apt:
+        name: docker-compose-plugin
+        state: present
+
+    # Verify Docker installation
+    - name: Verify Docker installation
+      command: docker --version
+      register: docker_version
+      changed_when: false
+
+    # Verify Nginx installation
+    - name: Verify Nginx installation
+      command: nginx -v
+      register: nginx_version
+      changed_when: false
+
+    # Verify Docker Compose installation
+    - name: Verify Docker Compose installation
+      command: docker compose version
+      register: compose_version
+      changed_when: false
+
+    # Show Docker version
+    - name: Show Docker version
+      debug:
+        msg: "Docker version: {{ docker_version.stdout }}"
+        
+    # Show Nginx version
+    - name: Show Nginx version
+      debug:
+        msg: "Nginx version: {{ nginx_version.stderr }}"
+
+    # Show Docker Compose version
+    - name: Show Docker Compose version
+      debug:
+        msg: "Docker Compose version: {{ compose_version.stdout }}"
