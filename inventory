@@ -3,4 +3,4 @@
 # Each VPS is associated with an IP address and user.
 
 [vps]
-51.77.210.239 ansible_user=ubuntu ansible_password=vps-123456 ansible_become=yes
+0.0.0.0 ansible_user=ubuntu ansible_password=my-pass ansible_become=yes

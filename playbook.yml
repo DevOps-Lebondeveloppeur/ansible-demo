@@ -94,3 +94,5 @@
     - name: Show Docker Compose version
       debug:
         msg: "Docker Compose version: {{ compose_version.stdout }}"
+
+
