@@ -1,0 +1,15 @@
+- name: Créer et supprimer des utilisateurs
+  hosts: vps
+  become: true
+  tasks:
+    - name: Créer un utilisateur test_user avec /bin/bash comme shell
+      user:
+        name: test_user
+        state: present
+        shell: /bin/bash
+
+    - name: Supprimer l'utilisateur test_user
+      user:
+        name: test_user
+        state: absent
+        remove: yes  # supprime aussi le dossier home
