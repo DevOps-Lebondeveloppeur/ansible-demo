@@ -1,0 +1,15 @@
+- name: Gérer l'état des services
+  hosts: vps
+  become: true
+  tasks:
+    - name: Démarrer le service nginx
+      service:
+        name: nginx
+        state: started
+        enabled: true  # active au démarrage du serveur
+
+    - name: Arrêter le service apache2
+      service:
+        name: apache2
+        state: stopped
+        enabled: false
