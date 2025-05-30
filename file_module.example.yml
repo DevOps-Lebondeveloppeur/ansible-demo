@@ -1,0 +1,19 @@
+- name: Exemple d'utilisation du module file
+  hosts: vps
+  become: true  
+  tasks:
+    - name: Créer un répertoire avec les permissions 0755
+      file:
+        path: /opt/mon_dossier
+        state: directory
+        mode: '0755'
+
+    - name: Créer un fichier vide
+      file:
+        path: /tmp/fichier_test.txt
+        state: touch
+
+    - name: Supprimer un fichier
+      file:
+        path: /tmp/fichier_test.txt
+        state: absent
