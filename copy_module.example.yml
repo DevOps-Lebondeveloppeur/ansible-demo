@@ -1,0 +1,9 @@
+- name: Copier un fichier local vers une machine distante
+  hosts: vps
+  become: true
+  tasks:
+    - name: Copier mon_fichier.txt vers /tmp/mon_fichier.txt sur le serveur distant
+      copy:
+        src: files/mon_fichier.txt   # fichier local dans le dossier "files" à côté du playbook
+        dest: /tmp/mon_fichier.txt
+        mode: '0644'
