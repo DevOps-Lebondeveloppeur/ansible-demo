@@ -1,0 +1,13 @@
+- name: Installer Certbot
+  hosts: vps
+  become: true
+  tasks:
+  
+    # Install Certbot and the Certbot Nginx plugin using apt package manager
+    - name: Install Certbot and python3-certbot-nginx
+      apt:
+        name:
+          - certbot                  # Certbot is the tool used to generate and manage SSL certificates from Let's Encrypt
+          - python3-certbot-nginx   # Plugin to automate SSL setup for Nginx with Certbot
+        state: present               # Ensure the packages are installed (equivalent to 'apt install')
+
